@@ -12,6 +12,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
+@NamedQueries({
+    @NamedQuery(name = "Customer.countAll", query = "SELECT COUNT(c) FROM customer c"),
+    @NamedQuery(name = "Customer.findFromCountry", query = "SELECT c FROM customer c WHERE c.address.country.countryCode = :country"),
+    @NamedQuery(name = "Customer.findYears", query = "SELECT DISTINCT EXTRACT(YEAR FROM c.since) FROM customer c")
+})
 public class Customer implements Serializable {
     @Id
     @GeneratedValue

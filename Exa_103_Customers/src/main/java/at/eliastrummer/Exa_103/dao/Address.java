@@ -1,9 +1,6 @@
 package at.eliastrummer.Exa_103.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @Entity(name = "address")
 @EqualsAndHashCode
+@NamedQueries({
+        @NamedQuery(name = "Address.countAll", query = "SELECT COUNT(a) FROM address a")
+})
 public class Address implements Serializable {
     @Id
     @GeneratedValue
@@ -35,15 +35,11 @@ public class Address implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "address", fetch = FetchType.EAGER)
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Customer> customers = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "country")
     @EqualsAndHashCode.Exclude
     private Country country;
-
-    @Override
-    public String toString() {
-        return "";
-    }
 }
