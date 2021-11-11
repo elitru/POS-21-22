@@ -1,0 +1,12 @@
+[
+  {
+    "firstname": "John",
+    "lastname": "Doe",
+    "birth_date": "01.01.1990"
+  },
+  {
+    "firstname": "Max",
+    "lastname": "Mustermann",
+    "birth_date": "02.01.1990"
+  }
+]

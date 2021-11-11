@@ -1,0 +1,20 @@
+<Products>
+    <link type="text/css" rel="stylesheet" id="dark-mode-custom-link"/>
+    <link type="text/css" rel="stylesheet" id="dark-mode-general-link"/>
+    <style lang="en" type="text/css" id="dark-mode-custom-style"/>
+    <style lang="en" type="text/css" id="dark-mode-native-style"/>
+    <Wrapper>
+        <Product id="1">
+            <name>Proteinpulver</name>
+            <release>01.01.1990</release>
+        </Product>
+        <Product id="2">
+            <name>Milch</name>
+            <release>02.01.1990</release>
+        </Product>
+        <Product id="3">
+            <name>Kaffee Joghurt</name>
+            <release>03.01.1990</release>
+        </Product>
+    </Wrapper>
+</Products>
