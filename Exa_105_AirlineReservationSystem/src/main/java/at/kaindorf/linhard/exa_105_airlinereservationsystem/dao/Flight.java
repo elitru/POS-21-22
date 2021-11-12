@@ -7,10 +7,29 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalTime;
 
-@Entity(name = "flight")
+@Entity
+@Table(name = "flight")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@NamedQueries({
+        @NamedQuery(
+                name = "Flight.countFlightsForAircraftType",
+                query = "SELECT COUNT(aircraft_type) FROM Flight flight JOIN flight.aircraft aircraft JOIN aircraft.aircraftType aircraft_type"
+        ),
+        @NamedQuery(
+                name = "Flight.getAmountOfArrivalFlightsForAirport",
+                query = "SELECT COUNT(f) FROM Flight f where f.arrivalAirport.name = :airportName"
+        ),
+        @NamedQuery(
+                name = "Flight.getAmountOfDepartureFlightsForAirport",
+                query = "SELECT COUNT(f) FROM Flight f where f.departureAirport.name = :airportName"
+        ),
+        @NamedQuery(
+                name = "Flight.getAmountOfFlightsInTheLastNDaysForAirport",
+                query = "SELECT COUNT(f) FROM Flight f WHERE f.departureTime BETWEEN CURRENT_DATE - (:n) AND CURRENT_DATE AND f.arrivalAirport.name = :name"
+        )
+})
 public class Flight {
 
     @Id

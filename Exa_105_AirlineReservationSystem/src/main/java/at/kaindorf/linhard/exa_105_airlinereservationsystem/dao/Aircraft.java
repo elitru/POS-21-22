@@ -7,10 +7,17 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "aircraft")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "aircraft")
+@NamedQueries({
+        @NamedQuery(
+                name = "Aircraft.getFlightsFromAirport",
+                query = "SELECT flight FROM Aircraft aircraft JOIN aircraft.flights flight JOIN flight.departureAirport da WHERE da.name = :airport"
+        )
+})
 public class Aircraft {
     @Id
     @GeneratedValue

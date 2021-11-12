@@ -8,8 +8,10 @@
         <class>at.eliastrummer.PLF_Ueben_1.pojo.Customer</class>
         <class>at.eliastrummer.PLF_Ueben_1.pojo.Product</class>
         <class>at.eliastrummer.PLF_Ueben_1.pojo.Order</class>
+        <class>at.eliastrummer.PLF_Ueben_1.pojo.ClassA</class>
+        <class>at.eliastrummer.PLF_Ueben_1.pojo.ClassB</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/htl_test_db"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/htl_jpa_intro"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.password" value="admin"/>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>

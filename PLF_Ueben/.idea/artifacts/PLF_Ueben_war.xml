@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="PLF_Ueben:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>PLF_Ueben</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="PLF_Ueben-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="PLF_Ueben:war exploded" />
+    </root>
+  </artifact>
+</component>

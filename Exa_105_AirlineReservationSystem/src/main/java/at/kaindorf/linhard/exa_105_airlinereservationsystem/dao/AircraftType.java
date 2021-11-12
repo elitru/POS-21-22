@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "aircraft_type")
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Table(name = "aircraft_type")
 public class AircraftType {
 
     @Id

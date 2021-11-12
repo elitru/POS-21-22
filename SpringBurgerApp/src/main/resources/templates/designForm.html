@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SpringBurger</title>
+    <style>
+    </style>
+</head>
+<body>
+<h1>Design your Spring-Burger</h1>
+<form method="post" th:object="${designBurger}">
+    <span th:if="${#fields.hasErrors('ingredients')}" th:errors="*{ingredients}">Ingredient error</span>
+    <div th:each="key: ${ingredients.keySet()}">
+        <div>Choose your <span th:text="${key}">TYPE</span></div>
+        <div th:each="ingredient: ${ingredients.get(key)}">
+            <input name="ingredients" type="checkbox" th:value="${ingredient.name}">
+            <span th:text="${ingredient.name}">INGREDIENT</span>
+        </div>
+        <br>
+    </div>
+    Give your burger a name <input name="name" th:field="*{name}" /><br />
+    <button type="submit">Send</button><br />
+    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
+</form>
+</body>
+</html>

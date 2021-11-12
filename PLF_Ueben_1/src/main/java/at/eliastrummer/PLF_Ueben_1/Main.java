@@ -57,7 +57,9 @@ public class Main {
         System.out.println(query.getSingleResult());
 
         TypedQuery<Customer> query2 = em.createNamedQuery("customer", Customer.class);
-        System.out.println(query2.getResultList());
+        System.out.println(query2.getResultList().size());
+
+        em.createQuery("SELECT c FROM Customer c", Customer.class);
 
         em.close();
         emf.close();

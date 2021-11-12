@@ -8,10 +8,29 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "airport")
+@Entity
+@Table(name = "airport")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@NamedQueries({
+        @NamedQuery(
+                name = "Airport.getArrivingFlightsForAirline",
+                query = "SELECT flight FROM Airport airport JOIN airport.arrivalFlights flight JOIN flight.airline airline WHERE airline = :airline"
+        ),
+        @NamedQuery(
+                name = "Airport.getDepartureFlightsForAirline",
+                query = "SELECT flight FROM Airport airport JOIN airport.departureFlights flight JOIN flight.airline airline WHERE airline = :airline"
+        ),
+        @NamedQuery(
+                name = "Airport.countAircraftVisit",
+                query = "SELECT COUNT(aircraft) FROM Airport airport JOIN airport.aircraft aircraft WHERE aircraft.id = :id"
+        ),
+        @NamedQuery(
+                name = "Airport.countAirlineDeparture",
+                query = "SELECT COUNT(flight) FROM Airport airport JOIN airport.departureFlights flight WHERE flight.airline.airlineName = :airline"
+        )
+})
 public class Airport {
     @Id
     @GeneratedValue
@@ -37,8 +56,8 @@ public class Airport {
 
 
     @OneToMany(mappedBy = "arrivalAirport")
-    private List<Flight> arrivalAirports;
+    private List<Flight> arrivalFlights;
 
     @OneToMany(mappedBy = "departureAirport")
-    private List<Flight> departureAirports;
+    private List<Flight> departureFlights;
 }

@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @NamedQueries({
-        @NamedQuery(name = "customer", query = "SELECT DISTINCT c FROM Customer c JOIN Order o JOIN o.products p WHERE p.id = 1")
+        @NamedQuery(name = "customer", query = "SELECT DISTINCT c FROM Customer c JOIN c.orders o JOIN o.products p WHERE p.id = 1")
 })
 public class Customer implements Serializable  {
     @Id

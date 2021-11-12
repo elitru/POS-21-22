@@ -15,6 +15,9 @@ import java.util.List;
 @EqualsAndHashCode
 @Table(name = "\"order\"")
 @IdClass(OrderId.class)
+@NamedQueries({
+        @NamedQuery(name = "test", query = "SELECT a FROM ClassA a WHERE a.id = :id")
+})
 public class Order {
     @Id
     @Column(name = "first_id")
