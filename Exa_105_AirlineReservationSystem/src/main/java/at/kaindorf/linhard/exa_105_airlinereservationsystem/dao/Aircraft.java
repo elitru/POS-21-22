@@ -1,16 +1,16 @@
 package at.kaindorf.linhard.exa_105_airlinereservationsystem.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@RequiredArgsConstructor
 @Table(name = "aircraft")
 @NamedQueries({
         @NamedQuery(
@@ -24,16 +24,18 @@ public class Aircraft {
     @Column(name = "aircraft_id")
     private Long id;
 
-    @ManyToMany(mappedBy = "aircraft")
-    private List<Airport> airports;
+    @ManyToMany(mappedBy = "aircraft", cascade = CascadeType.ALL)
+    private List<Airport> airports = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "aircraft_type_id")
-    private AircraftType aircraftType;
-
-    @ManyToOne
+    @NonNull
     private Airline airline;
 
-    @OneToMany(mappedBy = "aircraft")
-    private List<Flight> flights;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "aircraft_type_id")
+    @NonNull
+    private AircraftType aircraftType;
+
+    @OneToMany(mappedBy = "aircraft", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Flight> flights = new ArrayList<>();
 }

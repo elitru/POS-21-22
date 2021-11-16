@@ -1,8 +1,6 @@
 package at.kaindorf.linhard.exa_105_airlinereservationsystem.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,6 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ToString
+@EqualsAndHashCode
+@RequiredArgsConstructor
 @NamedQueries({
         @NamedQuery(
                 name = "Airport.getArrivingFlightsForAirline",
@@ -37,27 +38,41 @@ public class Airport {
     @Column(name = "airport_id")
     private Long id;
 
-    @Column(name = "country", length = 60)
+    @Column(name = "country", length = 80)
+    @NonNull
     private String country;
 
-    @Column(name = "city", length = 50)
+    @Column(name = "city", length = 80)
+    @NonNull
     private String city;
 
-    @Column(name = "name", length = 60)
+    @Column(name = "name", length = 80)
+    @NonNull
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "aircraft_airport", joinColumns = {
             @JoinColumn(name = "airport_id")
     }, inverseJoinColumns = {
             @JoinColumn(name = "aircraft_id")
     })
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Aircraft> aircraft = new ArrayList<>();
 
+    @OneToMany(mappedBy = "arrivalAirport", orphanRemoval = true, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Flight> arrivalFlights = new ArrayList<>();
 
-    @OneToMany(mappedBy = "arrivalAirport")
-    private List<Flight> arrivalFlights;
+    @OneToMany(mappedBy = "departureAirport", orphanRemoval = true, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Flight> departureFlights = new ArrayList<>();
 
-    @OneToMany(mappedBy = "departureAirport")
-    private List<Flight> departureFlights;
+    public Airport(String[] line) {
+        this.country = line[8];
+        this.city = line[10];
+        this.name = line[3];
+    }
 }

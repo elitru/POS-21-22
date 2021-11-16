@@ -1,8 +1,6 @@
 package at.kaindorf.linhard.exa_105_airlinereservationsystem.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +9,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ToString
+@EqualsAndHashCode
+@RequiredArgsConstructor
 @Table(name = "aircraft_type")
 public class AircraftType {
 
@@ -19,12 +20,15 @@ public class AircraftType {
     @Column(name = "aircraft_type_id")
     private Long id;
 
-    @Column(name = "type_name", length = 50)
+    @Column(name = "type_name", length = 70)
+    @NonNull
     private String typeName;
 
     @Column
+    @NonNull
     private int seats;
 
-    @OneToMany(mappedBy = "aircraftType")
-    private List<Aircraft> aircraft;
+    public AircraftType(String[] line) {
+        this.typeName = String.format("%s [%s]", line[1], line[2], Integer.parseInt(line[8]));
+    }
 }

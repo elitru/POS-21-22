@@ -1,8 +1,6 @@
 package at.kaindorf.linhard.exa_105_airlinereservationsystem.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalTime;
@@ -12,6 +10,9 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@ToString
+@EqualsAndHashCode
+@RequiredArgsConstructor
 @NamedQueries({
         @NamedQuery(
                 name = "Flight.countFlightsForAircraftType",
@@ -26,36 +27,49 @@ import java.time.LocalTime;
                 query = "SELECT COUNT(f) FROM Flight f where f.departureAirport.name = :airportName"
         ),
         @NamedQuery(
-                name = "Flight.getAmountOfFlightsInTheLastNDaysForAirport",
-                query = "SELECT COUNT(f) FROM Flight f WHERE f.departureTime BETWEEN CURRENT_DATE - (:n) AND CURRENT_DATE AND f.arrivalAirport.name = :name"
+                name = "Flight.getAmountOfFlightsFromToDateForAirport",
+                query = "SELECT COUNT(f) FROM Flight f WHERE f.arrivalAirport.name = :name AND f.departureTime >= :from AND f.departureTime <= :to"
         )
 })
 public class Flight {
-
     @Id
     @GeneratedValue
     @Column(name = "flight_id")
     private Long id;
 
     @Column(name = "departure_time")
+    @NonNull
     private LocalTime departureTime;
 
     @Column(name = "arrival_time")
+    @NonNull
     private LocalTime arrivalTime;
 
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "departure_airport_id")
+    @NonNull
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Airport departureAirport;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "arrival_airport_id")
+    @NonNull
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Airport arrivalAirport;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "aircraft_id")
+    @NonNull
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Aircraft aircraft;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @NonNull
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Airline airline;
 }
