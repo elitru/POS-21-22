@@ -17,7 +17,7 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(
                 name = "Airport.getArrivingFlightsForAirline",
-                query = "SELECT flight FROM Airport airport JOIN airport.arrivalFlights flight JOIN flight.airline airline WHERE airline = :airline"
+                query = "SELECT flight FROM Airport airport JOIN airport.arrivalFlights flight JOIN flight.airline airline WHERE airline.airlineName = :airline"
         ),
         @NamedQuery(
                 name = "Airport.getDepartureFlightsForAirline",
