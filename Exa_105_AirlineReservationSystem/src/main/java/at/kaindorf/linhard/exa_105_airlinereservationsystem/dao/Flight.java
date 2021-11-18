@@ -47,14 +47,14 @@ public class Flight {
 
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "departure_airport_id")
+    @JoinColumn(name = "departure_airport")
     @NonNull
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Airport departureAirport;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "arrival_airport_id")
+    @JoinColumn(name = "arrival_airport")
     @NonNull
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
