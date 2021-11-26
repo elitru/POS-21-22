@@ -28,4 +28,9 @@ public class Order implements Serializable {
 
     @OneToMany(mappedBy = "order")
     private List<Burger> burgers = new ArrayList<>();
+
+    public void addBurger(Burger burger) {
+        burgers.add(burger);
+        burger.setOrder(this);
+    }
 }
