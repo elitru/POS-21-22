@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     @Query("select e from Employee e where e.department.deptNo = ?1")
-    List<Employee> findEmployeesByDepartment(String departmentId);
+    List<Employee> findEmployeesByDepartment(int departmentId);
 
     @Modifying
     @Query("delete from Employee e where e.employeeNo = ?1")

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add employee</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/css/uikit.min.css" />
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.9.4/dist/js/uikit-icons.min.js"></script>
+</head>
+<body>
+<div class="uk-container" style="margin-top: 2rem">
+    <h2>Add employee</h2>
+    <h3>Employee will be added to the following department: <span th:text="${selectedDepartment.deptName}"></span></h3>
+    <div class="container-fluid">
+        <form method="post" action="/employees/new" th:object="${newEmployee}">
+            <section>
+                <label for="gender">Lastname</label>
+                <input id="lastname" class="uk-input" placeholder="Lastname" th:field="*{firstname}" />
+                <div class="error" th:errors="*{firstname}"></div>
+            </section>
+            <section class="separator">
+                <label for="firstname">Firstname</label>
+                <input id="firstname" class="uk-input" placeholder="Firstname" th:field="*{lastname}" />
+                <div class="error" th:errors="*{lastname}"></div>
+            </section>
+            <section class="separator">
+                <label for="birthdate">Birthdate</label>
+                <input id="birthdate" class="uk-input" type="date" min="1930-01-01" max="2002-01-01"  th:field="*{birthdate}" />
+                <div class="error" th:errors="*{birthdate}"></div>
+            </section>
+            <section class="separator">
+                <label for="gender">Gender</label>
+                <select id="gender" class="uk-select" name="gender" th:field="*{gender}">
+                    <option value="m">male</option>
+                    <option value="f">female</option>
+                </select>
+            </section>
+            <section class="separator">
+                <button class="uk-button uk-button-primary">Create employee</button>
+            </section>
+        </form>
+    </div>
+</div>
+<style>
+    .separator {
+        margin-top: 1.25rem;
+    }
+
+    .error {
+        padding-top: .5rem;
+        font-weight: 700;
+        color: #b11a1a;
+    }
+</style>
+</body>
+</html>

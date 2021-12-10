@@ -3,6 +3,7 @@ package at.eliastrummer.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
@@ -11,47 +12,44 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "employees")
 public class Employee implements Serializable {
     @Id
-    @Column(name = "emp_no")
-    @JsonProperty("emp_no")
-    private Long employeeNo;
-
-    @Column(name = "birth_date", nullable = false)
-    @NotNull(message = "Birthdate cannot be empty")
-    @JsonProperty("birthDate")
-    @JsonDeserialize(using = DateDeserializer.class)
-    private LocalDate dateOfBirth;
+    @Column(name = "emp_no", nullable = false)
+    @GeneratedValue
+    @JsonIgnore
+    private int employeeNo;
 
     @Column(name = "first_name", nullable = false, length = 14)
-    @NotNull(message = "Firstname cannot be empty")
-    @Size(min = 1, max = 14, message = "Firstname must be between 1 nad 124 characters long.")
-    @JsonProperty("firstname")
+    @NonNull
     private String firstname;
 
     @Column(name = "last_name", nullable = false, length = 16)
-    @NotNull(message = "Lastname cannot be empty")
-    @Size(min = 1, max = 14, message = "Lastname must be between 1 nad 124 characters long.")
-    @JsonProperty("lastname")
+    @NonNull
     private String lastname;
 
-    @Column(name = "gender", nullable = false)
-    @NotNull(message = "Gender cannot be empty")
-    @JsonProperty("gender")
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     @JsonDeserialize(using = GenderDeserializer.class)
+    @NonNull
     private Gender gender;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @Column(name = "birth_date", nullable = false)
+    @JsonDeserialize(using = DateDeserializer.class)
+    @JsonProperty("birthDate")
+    @NonNull
+    private LocalDate dateOfBirth;
+
+    @ManyToOne
     @JoinColumn(name = "dept_no")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     @JsonIgnore
+    @ToString.Exclude
     private Department department;
+
 }

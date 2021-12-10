@@ -5,6 +5,7 @@ import at.eliastrummer.pojo.Employee;
 import at.eliastrummer.repositories.DepartmentRepository;
 import at.eliastrummer.repositories.EmployeeRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,16 +33,16 @@ public class ImportManager {
 
     @PostConstruct
     public void loadAndImportData() throws IOException {
-        List<Department> departments = new ObjectMapper().readValue(IMPORT_FILE, new TypeReference<List<Department>>() { });
+        List<Department> departments = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false).readValue(IMPORT_FILE, new TypeReference<List<Department>>() { });
         List<Employee> employees = departments
                 .stream()
                 .map(Department::getEmployees)
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
-
         departments.forEach(d -> employees.add(d.getDeptManager()));
 
-        employeeRepository.saveAll(employees);
+        employees.forEach(e -> e.setDepartment(null));
+        employeeRepository.saveAllAndFlush(employees);
 
         departments.forEach(d -> {
             d.getEmployees().forEach(e -> e.setDepartment(d));

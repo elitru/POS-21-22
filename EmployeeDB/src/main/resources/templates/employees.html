@@ -16,39 +16,46 @@
             <div class="uk-child-width-expand@s uk-column-divider" uk-grid>
                 <section>
                     <h4>Employee List</h4>
-                    <form method="post" id="employee-form" th:object="${selectedDepartment}">
-                        <select class="uk-select" onchange="onChange()">
-                            <option th:each="dept: ${departments}" th:value="${dept}" th:text="${dept.deptName}" th:selected="${dept.deptNo.equals(selectedDepartment.deptNo)}"></option>
+                    <form method="get" id="employee-form" th:object="${selectedDepartment}">
+                        <select class="uk-select" th:name="dept" onchange="onChange()">
+                            <option th:each="dept: ${departments}" th:value="${dept.deptNo}" th:text="${dept.deptName}" th:selected="${dept.deptNo.equals(selectedDepartment.deptNo)}"></option>
                         </select>
-                        <button class="uk-button uk-button-primary" type="submit" style="margin-top: 1rem">
+                        <button class="uk-button uk-button-primary" type="submit" style="margin-top: 1rem" th:name="sort" th:value="apply">
                             Sortieren
                         </button>
+                        <a style="padding-top: .5rem; padding-left: 1rem" th:href="@{/employees/new}">Add employee</a>
                     </form>
                     <div class="uk-container-fluid">
+                        <p style="margin-top: 1rem">
+                            Number of employees in this department: <span th:text="${employees.size()}"></span>
+                        </p>
                         <table class="uk-table uk-table-divider">
                             <thead>
                                 <tr>
                                     <th>Employee No</th>
-                                    <th>Firstname</th>
                                     <th>Lastname</th>
+                                    <th>Firstname</th>
                                     <th>Birthdate</th>
                                     <th>Gender</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr th:each="emp: ${employees}">
                                     <td th:text="${emp.employeeNo}"></td>
-                                    <td th:text="${emp.firstname}"></td>
                                     <td th:text="${emp.lastname}"></td>
+                                    <td th:text="${emp.firstname}"></td>
                                     <td th:text="${emp.dateOfBirth}"></td>
                                     <td th:text="${emp.gender}"></td>
+                                    <td>
+                                        <form method="post" action="/employees/delete">
+                                            <button class="uk-button uk-button-danger" th:name="employeeNo" th:value="${emp.employeeNo}">Löschen</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </section>
-                <section>
-                    <h4>Add employee</h4>
                 </section>
             </div>
         </div>

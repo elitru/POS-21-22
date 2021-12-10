@@ -1,5 +1,6 @@
 package at.eliastrummer.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
@@ -15,24 +16,21 @@ import java.util.List;
 @Table(name = "departments")
 public class Department implements Serializable {
     @Id
+    @GeneratedValue
     @Column(name = "dept_no", length = 4)
-    @JsonProperty("number")
-    private String deptNo;
+    @JsonIgnore
+    private int deptNo;
 
-    @Column(name = "dept_name", nullable = false, length = 40, unique = true)
     @JsonProperty("name")
     private String deptName;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne
     @JoinColumn(name = "emp_no")
     @JsonProperty("deptManager")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private Employee deptManager;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "department", orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonProperty("employees")
-    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Employee> employees;
 }
