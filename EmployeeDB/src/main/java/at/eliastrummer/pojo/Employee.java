@@ -52,4 +52,7 @@ public class Employee implements Serializable {
     @ToString.Exclude
     private Department department;
 
+    public boolean isManager() {
+        return department.getDeptManager() == this;
+    }
 }

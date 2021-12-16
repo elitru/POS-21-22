@@ -41,7 +41,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="emp: ${employees}">
+                                <tr th:each="emp: ${employees}" th:class="${emp.isManager() ? 'is-manager' : ''}">
                                     <td th:text="${emp.employeeNo}"></td>
                                     <td th:text="${emp.lastname}"></td>
                                     <td th:text="${emp.firstname}"></td>
@@ -60,6 +60,12 @@
             </div>
         </div>
     </div>
+    <style>
+        .is-manager {
+            background: dodgerblue;
+            color: #fff;
+        }
+    </style>
 <script>
 
     const onChange = () => {

@@ -52,7 +52,7 @@ public class EmployeeController {
         List<Employee> employees = employeeRepository.findEmployeesByDepartment(selectedDept.getDeptNo());
 
         if (applySort != null && applySort.equals("apply")) {
-            employees.sort(Comparator.comparing(Employee::getLastname).thenComparing(Employee::getFirstname));
+            employees.sort(Comparator.comparing(Employee::getLastname, String.CASE_INSENSITIVE_ORDER).thenComparing(Employee::getFirstname, String.CASE_INSENSITIVE_ORDER));
             model.addAttribute("sortActive", true);
         }else{
             model.addAttribute("sortActive", false);
