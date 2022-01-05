@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Selection</title>
+</head>
+<body>
+    <h1>Statistics</h1>
+    <p>Average negative balance: <span th:text="${averageNegativeBalance}"></span></p>
+    <hr />
+    <p>Amount of accounts with more than one customer: <span th:text="${numberAccountsMoreThanOne}"></span></p>
+    <hr />
+    <p>Highest balance: <span th:text="${highestBalance.getBalanceFormatted()}"></span></p>
+    <p>Account number: <span th:text="${highestBalance.accountNumber}"></span></p>
+    <p>
+        Owner(s):
+        <span th:each="c: ${highestBalance.customers}" th:text="${c.lastname}"></span>
+    </p>
+    <hr />
+    <p>Lowest balance: <span th:text="${lowestBalance.getBalanceFormatted()}"></span></p>
+    <p>Account number: <span th:text="${lowestBalance.accountNumber}"></span></p>
+    <p>
+        Owner(s):
+        <span th:each="c: ${lowestBalance.customers}" th:text="${c.lastname}"></span>
+    </p>
+    <hr />
+    <p>Percentage male: <span th:text="${percentageMale}"></span></p>
+    <hr />
+    <p>Percentage female: <span th:text="${percentageFemale}"></span></p>
+    <a href="/">Go back to selection overview</a>
+    <hr />
+    <form method="get" th:action="@{/statistics}">
+        <label for="cities">Show customers from: </label>
+        <select name="city" id="cities">
+            <option th:each="city: ${cities}" th:value="${city}" th:selected="${city == selectedCity}" th:text="${city}"></option>
+        </select>
+        <button type="submit">Show customers</button>
+    </form>
+    <div th:if="${customers != null}">
+        <p th:each="c: ${customers}" th:text="${c.lastname + ', ' + c.firstname}"></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+</head>
+<body>
+<h1>Customer overview</h1>
+<div>
+    <p>Customer: <span th:text="${customer.lastname + ', ' + customer.firstname + ' (' + customer.gender.getAbbreviation() + ')' + ' ' + customer.getBirthdate()}"></span></p>
+    <p>Address <span th:text="${customer.address.streetName + ' ' + customer.address.streetNumber + ', ' + customer.address.zipCode + ' ' + customer.address.city}"></span></p>
+</div>
+<div>
+    <h3>Giro accounts</h3>
+    <table border="black">
+        <thead>
+            <th>number</th>
+            <th>balance</th>
+            <th>overdraft-limit</th>
+            <th>debit</th>
+            <th>credit</th>
+            <th>amount</th>
+            <th>update</th>
+        </thead>
+        <tbody>
+            <tr th:each="a: ${customer.getGiroAccounts()}">
+                <form th:action="@{/customer/{userId}(userId=${customer.customerId})}" th:id="${'form_' + a.accountId}" method="post">
+                    <input th:id="${'type_' + a.accountId}" value="debit" name="type" type="text" hidden />
+                    <input th:value="${a.accountId}" name="accountId" type="text" hidden />
+                    <th th:text="${a.accountNumber}"></th>
+                    <th th:text="${a.getBalanceFormatted()}"></th>
+                    <th th:text="${a.getOverdraftFormatted()}"></th>
+                    <th th:text="${a.getDebitInterest()}"></th>
+                    <th th:text="${a.getCreditInterest()}"></th>
+                    <th>
+                        <input value="0" type="number" name="amount" />
+                    </th>
+                    <th>
+                        <button type="button" th:onclick="|onUpdate(${a.accountId}, false)|">+</button>
+                        <button type="button" th:onclick="|onUpdate(${a.accountId}, true)|">-</button>
+                    </th>
+                    <th th:if="${error != null && error.error && error.account.accountId == a.accountId}">
+                        <span style="color: red;" th:text="${error.errorMsg}"></span>
+                    </th>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <h3>Saving accounts</h3>
+    <table border="black">
+        <thead>
+        <th>number</th>
+        <th>balance</th>
+        <th>interest</th>
+        <th>amount</th>
+        <th>update</th>
+        </thead>
+        <tbody>
+        <tr th:each="a: ${customer.getSavingsAccounts()}">
+            <form th:action="@{/customer/{userId}(userId=${customer.customerId})}" method="post" th:id="${'form_' + a.accountId}">
+                <input th:id="${'type_' + a.accountId}" value="debit" name="type" type="text" hidden />
+                <input th:value="${a.accountId}" name="accountId" type="text" hidden />
+                <th th:text="${a.accountNumber}"></th>
+                <th th:text="${a.getBalanceFormatted()}"></th>
+                <th th:text="${a.getInterest()}"></th>
+                <th>
+                    <input value="0" type="number" name="amount" />
+                </th>
+                <th>
+                    <button type="button" th:onclick="|onUpdate(${a.accountId}, false)|">+</button>
+                    <button type="button" th:onclick="|onUpdate(${a.accountId}, true)|">-</button>
+                </th>
+                <th th:if="${error != null && error.error && error.account.accountId == a.accountId}">
+                    <span style="color: red;" th:text="${error.errorMsg}"></span>
+                </th>
+            </form>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <br />
+    <br />
+    <p>Total balance of all accounts: <span th:text="${totalBalance}"></span></p>
+    <br />
+    <a href="/">back to account overview</a>
+</div>
+<script>
+    const onUpdate = (accountId, isWithdrawal) => {
+        const form = document.getElementById(`form_${accountId}`);
+
+        if (isWithdrawal) {
+            document.getElementById(`type_${accountId}`).value = 'withdrawal';
+        }
+
+        form.submit();
+    };
+</script>
+</body>
+</html>

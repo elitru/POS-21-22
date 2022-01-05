@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Selection</title>
+</head>
+<body>
+<h1>Customer selection</h1>
+<form th:action="@{/}" method="get">
+    <span>Lastname: </span>
+    <input name="q" th:value="${query}" />
+    <button type="submit">
+        Search
+    </button>
+</form>
+<div>
+    <br />
+    Customers found: <span th:text="${customers.size()}"></span>
+</div>
+<br />
+<div>
+    <section style="max-height: 800px; overflow: auto; width: 500px;">
+        <div th:each="customer: ${customers}">
+            <input class="customer" type="radio" th:id="${'entry_' + customer.customerId}" th:value="${customer.customerId}" name="selected" />
+            <label th:for="${'entry_' + customer.customerId}" th:text="${customer.lastname + ',' + customer.firstname}"></label>
+            <br />
+        </div>
+    </section>
+    <br />
+    <button type="button" onclick="onRedirectToUserDetailsView()">
+        Show customer details
+    </button>
+    <div>
+        <br />
+        <br />
+        <a href="/statistics">Load statistics</a>
+    </div>
+</div>
+<script>
+    const onRedirectToUserDetailsView = () => {
+        const customers = Array.from(document.getElementsByClassName("customer"));
+        const selectedCustomer = customers.find(c => c.checked);
+        if (!selectedCustomer) return;
+
+        window.location.href = `/customer/${selectedCustomer.value}`
+    };
+</script>
+</body>
+</html>
