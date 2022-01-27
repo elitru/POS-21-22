@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Scott View</title>
+</head>
+<body>
+    <h1>Scott-Database</h1>
+    <form id="deptList" method="post" th:action="@{/scottdb}">
+        <div th:each="dept: ${depts}">
+            <input type="radio" name="selectedDept" th:value="${dept.getDeptno()}" th:text="${dept.toFormattedName()}" th:checked="${dept.getDeptno().toString().equals(selectedDept)}" th:onclick="|onChangeSelectedDepartment('${dept.getDeptno()}')|">
+        </div>
+    </form>
+    <br />
+    <br />
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Job</th>
+                <th>Hiredate</th>
+                <th>Salary</th>
+                <th>Salgrade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="emp: ${employees}">
+                <th th:text="${emp.toFormattedName()}"></th>
+                <th th:text="${emp.toFormattedJob()}"></th>
+                <th th:text="${emp.toFormattedHireDate()}"></th>
+                <th th:text="${emp.toFormattedSalary()}"></th>
+                <th th:text="${salgrades.get(emp).getGradeId()}"></th>
+            </tr>
+            <tr th:if="${!selectedDept.equals('')}">
+                <form method="post" th:action="@{/scottdb/addEmp}" th:object="${newEmployee}">
+                    <th>
+                        <input th:field="*{lastname}" type="text" />
+                    </th>
+                    <th>
+                        <input th:field="*{job}" type="text" />
+                    </th>
+                    <th>
+                        <input th:field="*{rawHireDate}" type="text" />
+                    </th>
+                    <th>
+                        <input th:field="*{salary}" type="number" />
+                    </th>
+                    <th>
+                        <button type="submit">
+                            add
+                        </button>
+                    </th>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        const onChangeSelectedDepartment = (deptNo) => {
+            const form = document.getElementById('deptList');
+            form.setAttribute('selectedDept', deptNo);
+            form.submit();
+        };
+    </script>
+</body>
+</html>
