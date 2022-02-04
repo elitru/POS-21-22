@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="exams.js"></script>
+    <title>ExamDB</title>
+</head>
+<body>
+    <h1>ExamDB</h1>
+    <div>
+        <span>Classes</span>
+        <select id="classes" onchange="onLoadClass()"></select>
+    </div>
+    <br />
+    <table border="1">
+        <thead>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th></th>
+        </thead>
+        <tbody id="students">
+
+        </tbody>
+    </table>
+    <section>
+        <span>Page: </span>
+        <select id="pages"></select>
+    </section>
+    <br />
+    <br />
+    <div id="exams" style="display: none;">
+        <h2>Exams for <span id="examsFor"></span></h2>
+        <div>
+            <table border="1">
+                <thead>
+                    <th>Date</th>
+                    <th>Duration in minutes</th>
+                    <th>Subject</th>
+                    <th></th>
+                </thead>
+                <tbody id="studentExams">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
