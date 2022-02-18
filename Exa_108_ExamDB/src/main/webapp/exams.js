@@ -63,8 +63,8 @@ const onLoadExams = async (studentId, firstname, lastname) => {
                     </select>
                 </th>
                 <th>
-                    <button onclick="onUpdateExam(${exam.examId}, ${studentId})">Update</button>
-                    <button onclick="onDeleteExam(${exam.examId}, ${studentId})">Delete</button>
+                    <button onclick="onUpdateExam(${exam.examId}, ${studentId}, '${firstname}', '${lastname}')">Update</button>
+                    <button onclick="onDeleteExam(${exam.examId}, ${studentId}, '${firstname}', '${lastname}')">Delete</button>
                 </th>
             </tr>
         `,
@@ -95,7 +95,7 @@ const onLoadClass = async () => {
     window['exams'].style.display = 'none';
 };
 
-const onUpdateExam = async (id, studentId) => {
+const onUpdateExam = async (id, studentId, firstname, lastname) => {
     const request = {
         id,
         dateOfExam: window[`exam_${id}_date`].value,
@@ -105,7 +105,7 @@ const onUpdateExam = async (id, studentId) => {
 
     await axios.patch(`/exams/${studentId}`, request);
     await loadStudentsForClass(currentClass.classId);
-    await onLoadExams(studentId);
+    await onLoadExams(studentId, firstname, lastname);
 };
 
 const onCreateExam = async (studentId) => {
@@ -120,8 +120,8 @@ const onCreateExam = async (studentId) => {
     await onLoadExams(studentId);
 };
 
-const onDeleteExam = async (examId, studentId) => {
+const onDeleteExam = async (examId, studentId, firstname, lastname) => {
     await axios.delete(`/exams/${studentId}/${examId}`);
     await loadStudentsForClass(currentClass.classId);
-    await onLoadExams(studentId);
+    await onLoadExams(studentId, firstname, lastname);
 };
