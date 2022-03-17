@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <teacher>
+        <name>Anna Moser</name>
+        <birthdate>07.03.1892</birthdate>
+        <subjects>
+            <subject id="1">
+                <name>Deutsch</name>
+            </subject>
+            <subject id="2">
+                <name>Mathematik</name>
+            </subject>
+        </subjects>
+    </teacher>
+    <teacher>
+        <name>Alfred Tomschitz</name>
+        <birthdate>03.09.1892</birthdate>
+        <subjects>
+            <subject id="3">
+                <name>DBI</name>
+            </subject>
+            <subject id="4">
+                <name>POS</name>
+            </subject>
+        </subjects>
+    </teacher>
+</root>

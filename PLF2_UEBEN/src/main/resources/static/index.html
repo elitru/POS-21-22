@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Übung</title>
+    <script src="index.js"></script>
+</head>
+<body>
+    <h1>People</h1>
+    <div>
+        <table id="people" border="1">
+            <thead>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Birthdate</td>
+                <td>Hobbies</td>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <br />
+        <select id="page" onchange="onChangePage(event)"></select>
+        <template id="person-create">
+            <td></td>
+            <td><input id="name" /></td>
+            <td><input id="birthdate" /></td>
+            <td><input id="hobbies" /></td>
+            <td><button type="button" onclick="onCreatePerson()">Create</button></td>
+        </template>
+    </div>
+</body>
+</html>

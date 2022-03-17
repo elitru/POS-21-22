@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "birthdate": "01.01.1981",
+    "hobbies": [
+      {
+        "id": 1,
+        "name": "Darts"
+      },
+      {
+        "id": 2,
+        "name": "Football"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Jennifer Block",
+    "birthdate": "05.11.1989",
+    "hobbies": [
+      {
+        "id": 1,
+        "name": "Darts"
+      },
+      {
+        "id": 3,
+        "name": "Tennis"
+      }
+    ]
+  }
+]
