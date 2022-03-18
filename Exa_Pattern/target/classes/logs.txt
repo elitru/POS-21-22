@@ -1,1 +1,0 @@
-WeatherData(dateTime=2022-02-28T06:00:05, temperature=-3.99, pressure=938.0, humidity=87.0, windSpeed=86, windDirection=55)

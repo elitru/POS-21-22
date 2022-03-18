@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class LocalDateTimeSerializer extends StdDeserializer<LocalDateTime> {
+public class LocalDateTimeDeserializer extends StdDeserializer<LocalDateTime> {
     private DateTimeFormatter DTF = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
-    public LocalDateTimeSerializer() {
+    public LocalDateTimeDeserializer() {
         super(LocalDateTime.class);
     }
 

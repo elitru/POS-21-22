@@ -14,6 +14,7 @@ public class WeatherDataMain {
         WeatherDataLogger logger = new WeatherDataLogger();
         WeatherDataGUI gui = new WeatherDataGUI();
         gui.setVisible(true);
+        logger.open();
 
         WeatherDataConsumer consumer = new WeatherDataConsumer(queue);
         consumer.register(printer);
@@ -29,5 +30,6 @@ public class WeatherDataMain {
         producerThread.join();
 
         consumerThread.interrupt();
+        logger.close();
     }
 }
